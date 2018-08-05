@@ -1,0 +1,78 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - AbitYour</title>
+
+    <meta name="Keywords" content="Kolesnikov Saveliy Resume Web Developer Савелий Колесников сайт
+	веб разработчика abitYour Vstup Vstup2017 Vstup2018 Поступление Украина Узнать свое место в списке приоритетов
+	abitYour Vstup Vstup2017 Vstup2018 Поступление Украина Узнать свое место в списке приоритетов">
+
+    <meta name="description" content="AbitYOUR – программа, которая покажет ваше настоящее место при
+	поступлении. Разработана Савелием Колесниковым. ">
+
+    <meta name="autor" content="Kolesnikov Saveliy Andreevich, s.koles33@gmail.com">
+    <meta name="copyright" content="Kolesnikov inc">
+
+    <link rel="apple-touch-icon" sizes="180x180" href="~/images/favicon.png">
+    <meta name="theme-color" content="#73B8FF">
+
+    <link rel="icon" type="image/png" href="~/images/favicon.png" sizes="32x32">
+    <link rel="icon" type="image/png" href="~/images/favicon.png" sizes="16x16">
+
+    <link rel="stylesheet" href="~/css/site.css" />
+    <link rel="stylesheet" href="~/css/space.css" />
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.1/css/bootstrap-grid.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.1/css/bootstrap-reboot.min.css" rel="stylesheet">
+    
+    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-7643156802675936",
+            enable_page_level_ads: true
+        });
+    </script>
+</head>
+<body>
+<div id="main-wrapper">
+    @RenderBody()
+    <footer class="container-fluid" id="navigate-footer">
+        <div class="row">
+            <div class="col-12 col-md-4">
+                <a class="footer-navigate-link" asp-controller="Home" asp-action="Index">Главная</a>
+            </div>
+            <div class="col-12 col-md-4">
+                <a class="footer-navigate-link" asp-controller="Home" asp-action="Guide">Инструкция</a>
+            </div>
+            @*
+                <div class="col-12 col-md-3">
+                <a class="footer-navigate-link" asp-controller="Home" asp-action="EntranceInfo">О поступлении</a>
+                </div>
+                *@
+            <div class="col-12 col-md-4">
+                <a class="footer-navigate-link" asp-controller="Home" asp-action="About">О нас</a>
+            </div>
+        </div>
+    </footer>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jquery-ajax-unobtrusive@3.2.4/jquery.unobtrusive-ajax.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>
+
+@RenderSection("Scripts", required: false)
+<script src="~/js/site.min.js"></script>
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-102973451-2"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'UA-102973451-2');
+</script>
+</body>
+</html>

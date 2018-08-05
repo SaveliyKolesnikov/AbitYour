@@ -1,0 +1,140 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<blockquote class="blockquote">
+    <h1 class="display-2 text-center text-primary">Abit YOUR</h1>
+    <footer class="blockquote-footer text-center text-info">
+        Prod by
+        <cite title="More about me: s-res.azurewebsites.net">
+            <a href="http://s-res.azurewebsites.net" class="deco-none" target="_blank"> Saveliy Kolesnikov</a>
+        </cite>
+    </footer>
+</blockquote>
+
+<div class="space-10"></div>
+<div class="container-fluid">
+    <div class="row justify-content-center margin-bottom-5">
+        <div class="col-12 col-sm-10 col-md-9 col-lg-7 justify-content-center text-center">
+            <h3 class="welcome-message">Добро пожаловать на <span class="text-primary">AbitYour</span></h3>
+            <p class="">
+                Если вы не знаете как пользоваться нашим сервисом, пожалуйста,
+                ознакомьтесь с <a asp-controller="Home" asp-action="Guide" title="Инструкция" target="_blank">инструкцией</a>.
+            </p>
+        </div>
+    </div>
+    <div class="space-5"></div>
+
+    @*<div class="row justify-content-center margin-bottom-5">
+        <div class="col-12 col-sm-10 col-md-9 col-lg-7 input-group updateMessageWrapper">
+            <div class="info text-info alert-info alert justify-content-center text-center" id="update-message" style="display: none; width: 100%;" role="alert">
+                <div><strong style="font-size: 1.1em;">Обновление</strong></div>
+                Добавлена поддержка сайта <strong>vstup.osvita.ua</strong>
+            </div>
+            <button class="closeUpdateMessage-button">
+                <img src="images/close.png" style="height: 100%; position: absolute; top: 0; right: 0;" alt=""/>
+            </button>
+        </div>
+    </div>*@
+
+    <div class="row justify-content-center margin-bottom-5">
+        <div class="col-12 col-sm-10 col-md-9 col-lg-7 input-group">
+            <div class="alert alert-danger" id="alert-danger-id" style="display: none;" role="alert">
+                <strong>Упс!</strong> Кажется вы ввели неверные данные. Проверьте введенные вами данные и попробуйте снова.
+            </div>
+        </div>
+    </div>
+
+    <div class="space-5"></div>
+
+    <div class="container-fluid row justify-content-center m-0">
+        <div class="col-11 col-sm-9 col-md-2 margin-bottom-10 first-ad-block ad-block">
+            @*@await Component.InvokeAsync("WideSkyscraper")*@
+        </div>
+        <div class="col-12 col-sm-9 col-md-7 container">
+            <form asp-controller="CreateStudentTable" asp-action="Index"
+                  data-ajax="true"
+                  data-ajax-method="POST"
+                  data-ajax-mode="replace"
+                  data-ajax-update="#student-information"
+                  data-ajax-begin="progressBarAnimationStart"
+                  data-ajax-complete="progressBarAnimationStop"
+                  class="margin-bottom-20">
+                <div class="row justify-content-center margin-bottom-5">
+                    <div class="input-group">
+                        <input class="form-control" id="url" name="URL" type="url" title="URL"
+                               value="@ViewBag.Url"
+                               placeholder="http://vstup.info/2017/92/i2017i92p390392.html" required />
+                    </div>
+                </div>
+                <div class="row justify-content-center margin-bottom-5">
+                    <div class="input-group">
+                        <input class="form-control" id="name" name="name" type="text" value="@ViewBag.Name"
+                               title="Surname" placeholder="Колеснiков" />
+                    </div>
+                </div>
+                <div class="row justify-content-center margin-bottom-10">
+                    <div class="input-group">
+                        <input class="form-control" type="number" step="0.001" name="score" value="@ViewBag.Score"
+                               title="Score" id="score" placeholder="190,082" required />
+                    </div>
+                </div>
+                <div class="row justify-content-center margin-bottom-5">
+                    <div class="col-sm-7 col-md-6 col-lg-5">
+                        <span class="input-group">
+                            <input type="submit" class="btn btn-outline-info" title="GO!" id="start_btn" value="START" />
+                        </span>
+                    </div>
+                </div>
+                <div class="row justify-content-center">
+                    <div class="container-fluid text-center">
+                        <p class="info">
+                            Запросов сегодня: <span id="successful-requests">-</span>
+                        </p>
+                    </div>
+                </div>
+            </form>
+            <div class="row justify-content-center margin-bottom-10">
+                <div class="col-12">
+                    <div class="progress">
+                        <div class="progress-bar progress-bar-striped bg-success" id="progress"
+                             role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row justify-content-center margin-bottom-5">
+                <div class="col-12" id="student-information">
+
+                </div>
+            </div>
+        </div>
+        <div class="col-11 col-sm-9 col-md-2 margin-bottom-10 ad-block">
+            <div class="pc-banner">
+                @*@await Component.InvokeAsync("WideSkyscraper")*@
+            </div>
+            <div class="mobile-banner justify-content-center">
+                @*@await Component.InvokeAsync("MobileBanner")*@
+            </div>
+        </div>
+    </div>
+
+    <div class="space-20"></div>
+</div>
+
+
+
+@section Scripts
+    {
+    <script src="~/js/signalr.min.js"></script>
+    <script src="~/js/requestsHandler.min.js"></script>
+    <script src="js/getResult.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js"
+            integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh"
+            crossorigin="anonymous"></script>
+
+    <script>
+        $("#update-message").show();
+    </script>
+
+}

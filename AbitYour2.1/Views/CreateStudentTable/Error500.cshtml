@@ -1,0 +1,33 @@
+﻿@using System.IO
+@using System.Text.RegularExpressions
+
+@functions
+{
+
+    private static string PathTo500ErrorImage()
+    {
+        var curDir = Environment.CurrentDirectory;
+        var pathToImages = $"{curDir}/wwwroot/images/SomethingWentWrong";
+        try
+        {
+            var files = Directory.GetFiles(pathToImages);
+            var random = new Random(DateTime.Now.Millisecond);
+            var fileNumber = random.Next(0, files.Length);
+            var regexp = Regex.Match(files[fileNumber], "^.*wwwroot");
+
+            if (regexp.Success)
+                return files[fileNumber].Replace(regexp.Value, "");
+        }
+        catch
+        {
+            // ignored
+        }
+
+        return "images/SomethingWentWrong/1.png";
+    }
+
+}
+
+<div style="width: 100%; height: auto;">
+    <img src="@PathTo500ErrorImage()" class="img-fluid" style="display: block; width: 50%; height: auto; margin: 0 auto;" alt="Responsive image">
+</div>

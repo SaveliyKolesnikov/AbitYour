@@ -1,0 +1,57 @@
+﻿@model IResultList
+
+@{
+    Layout = null;
+    var numOfStudents = Model.NumOfStudentsWithPriority.Count;
+    var studentPositionIn1Prior = Model.NumOfStudentsWithPriority.ElementAt(0);
+    if (studentPositionIn1Prior < 1)
+    {
+        studentPositionIn1Prior = 1;
+    }
+}
+
+<div class="space-20"></div>
+<div class="container-fluid">
+    <div class="row justify-content-center">
+        <div class="text-center text-capitalize" id="info">
+
+            <p style="margin: 2px;">В списке первых приоритетов вы @studentPositionIn1Prior</p>
+            <p style="margin: 2px;">Количество приоритетов перед вами:</p>
+            @for (var i = 0; i < numOfStudents; i++)
+            {
+                var amountOfPeople = Model.NumOfStudentsWithPriority.ElementAt(i);
+                var message = $"С {i + 1} приоритетом поступает {amountOfPeople} человек.";
+                <p style="margin: 2px;">@message</p>
+            }
+        </div>
+    </div>
+</div>
+<div class="space-10"></div>
+<div class="container-fluid">
+    <div class="row justify-content-center">
+        <div class="text-center table-responsive" id="table-container">
+            <table class="table">
+                <thead>
+                <tr>
+                    <td>Номер</td>
+                    <td>ФИО</td>
+                    <td>Приоритет</td>
+                    <td>Балл</td>
+                </tr>
+                </thead>
+                <tbody>
+                @foreach (var student in Model.Students)
+                {
+                    var currentUserStyle = student == Model.CurrentStudent ? "style=background:yellow;" : "";
+                    <tr @currentUserStyle>
+                        <td>@student.Number</td>
+                        <td>@student.Name</td>
+                        <td>@student.Priority</td>
+                        <td>@student.Score</td>
+                    </tr>
+                }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
