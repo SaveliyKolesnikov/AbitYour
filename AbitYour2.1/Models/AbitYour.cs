@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 using AbitYour.Models.ExtensionMethods;
 using AbitYour.Models.NewDayTimer;
 using AbitYour.Models.Parsers;
@@ -35,7 +36,7 @@ namespace AbitYour.Models
             ["vstup.osvita.ua"] = ParsedSite.VstupOsvita
         };
 
-        public IResultList Parse(string url, string userName, string userScore)
+        public async Task<IResultList> ParseAsync(string url, string userName, string userScore)
         {
             url = url.Trim();
             userName = userName.Trim()
@@ -86,20 +87,21 @@ namespace AbitYour.Models
                         parser = new VstupEdboParser(url);
                         break;
                     default:
-                        parser = null;
-                        break;
+                        throw new ArgumentException(invalidUrl);
                 }
-
+                
                 try
                 {
-                    studentsList = parser?.GetStudents(userName, score, ref currentStudent) ?? throw new ArgumentException(invalidUrl);
+                    studentsList = await parser.GetStudentsAsync(userName, score) ?? throw new ArgumentException(invalidUrl);
+                    currentStudent = studentsList.Find(student =>
+                        student.Name.StartsWith(userName, StringComparison.CurrentCultureIgnoreCase) &&
+                        Math.Abs(student.Score - score) < 0.001);
                     _cachedResult[url] = studentsList;
                 }
                 catch (ArgumentException)
                 {
                     throw new ArgumentException(invalidUrl);
                 }
-
             }
 
 
@@ -113,7 +115,7 @@ namespace AbitYour.Models
             return resultList;
         }
 
-        public string CreateInvalidUrlMessage()
+        private string CreateInvalidUrlMessage()
         {
             var invalidUrl = new StringBuilder();
 

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Text;
+using System.Threading.Tasks;
 using AbitYour.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Http;
@@ -21,13 +22,13 @@ namespace AbitYour.Controllers
         
         
         [HttpPost]
-        public IActionResult Index(string url, string name, string score)
+        public async Task<IActionResult> Index(string url, string name, string score)
         {
             IResultList result;
 
             try
             {
-                result = _abitYourParser.Parse(url, name, score);
+                result = await _abitYourParser.ParseAsync(url, name, score);
                 SetUserDataCookies(url, name, score);
             }
             catch (ArgumentException exc)

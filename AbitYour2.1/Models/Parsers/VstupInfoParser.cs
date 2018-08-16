@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 using AbitYour.Models.ExtensionMethods;
 using AngleSharp;
 
@@ -9,19 +10,19 @@ namespace AbitYour.Models.Parsers
 {
     public class VstupInfoParser : IStudentsListFetcher
     {
-        public readonly string Url;
+        private readonly string _url;
 
         public VstupInfoParser(string url)
         {
-            Url = url;
+            _url = url;
         }
 
-        public List<Student> GetStudents(string userName, double userScore, ref Student currentStudent)
+        public async Task<List<Student>> GetStudentsAsync(string userName, double userScore)
         {
             var res = new List<Student>();
 
             var config = Configuration.Default.WithDefaultLoader();
-            var document = BrowsingContext.New(config).OpenAsync(Url).GetAwaiter().GetResult();
+            var document = await BrowsingContext.New(config).OpenAsync(_url);
 
             const string rowSelector = "div.row table.tablesaw-sortable tbody tr ";
             var rows = document.QuerySelectorAll(rowSelector);
@@ -62,13 +63,6 @@ namespace AbitYour.Models.Parsers
                 var score = cells[currentIndex].TextContent.Trim().ParseToDouble();
                 var student = new Student(number, name, priority, score);
                 res.Add(student);
-
-                if (currentStudent is null &&
-                    student.Name.StartsWith(userName, StringComparison.CurrentCultureIgnoreCase) &&
-                    Math.Abs(student.Score - userScore) < 0.001)
-                {
-                    currentStudent = student;
-                }
             }
 
             return res;

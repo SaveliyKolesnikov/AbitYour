@@ -16,7 +16,7 @@ namespace AbitYour.Models.Parsers
             Url = url;
         }
 
-        public List<Student> GetStudents(string userName, double userScore, ref Student currentStudent)
+        public async Task<List<Student>> GetStudentsAsync(string userName, double userScore)
         {
             var res = new List<Student>();
 
@@ -48,13 +48,6 @@ namespace AbitYour.Models.Parsers
                 var student = new Student(number, name, priority, score);
 
                 res.Add(student);
-
-                if (currentStudent is null &&
-                    student.Name.StartsWith(userName, StringComparison.CurrentCultureIgnoreCase) &&
-                    Math.Abs(student.Score - userScore) < 0.001)
-                {
-                    currentStudent = student;
-                }
             }
 
             return res;

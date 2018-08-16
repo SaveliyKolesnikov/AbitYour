@@ -1,12 +1,12 @@
 ﻿using Microsoft.AspNetCore.SignalR;
 using System;
+using System.Threading.Tasks;
 using AbitYour.Models.NewDayTimer;
 
 namespace AbitYour.Hubs
 {
     public class RequestHub : Hub
     {
-        private static readonly Random NumOfRequestsStartValueGenerator = new Random(DateTime.Now.Millisecond);
         private static int _numOfRequests = 0;
 
         static RequestHub()
@@ -17,15 +17,13 @@ namespace AbitYour.Hubs
 
         public int GetNumberOfRequests() => _numOfRequests;
 
-        public void AddRequest()
+        public async Task AddRequest()
         {
             _numOfRequests++;
-            Invoke();
+            await RefreshUsersCount();
         }
 
-        private void Invoke()
-        {
-            Clients.All.SendAsync("newRequest", _numOfRequests);
-        }
+        private async Task RefreshUsersCount() =>
+            await Clients.All.SendAsync("newRequest", _numOfRequests);
     }
 }

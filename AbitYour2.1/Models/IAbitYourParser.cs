@@ -1,7 +1,9 @@
-﻿namespace AbitYour.Models
+﻿using System.Threading.Tasks;
+
+namespace AbitYour.Models
 {
     public interface IAbitYourParser
     {
-        IResultList Parse(string url, string userName, string userScore);
+        Task<IResultList> ParseAsync(string url, string userName, string userScore);
     }
 }

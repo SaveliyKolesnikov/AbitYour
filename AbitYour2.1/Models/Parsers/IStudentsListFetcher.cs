@@ -7,6 +7,6 @@ namespace AbitYour.Models.Parsers
 {
     interface IStudentsListFetcher
     {
-        List<Student> GetStudents(string userName, double userScore, ref Student currentStudent);
+        Task<List<Student>> GetStudentsAsync(string userName, double userScore);
     }
 }
